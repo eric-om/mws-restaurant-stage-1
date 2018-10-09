@@ -50,7 +50,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 #footer {
   background-color: #252831;
-  color: rgb(221, 221, 221);
+  color: #D86519;
   font-size: 8pt;
   letter-spacing: 1px;
   padding: 25px;
@@ -198,7 +198,7 @@ nav h1 a {
   margin-left: 5px;
 }
 #restaurants-list li a {
-  color: rgb(216, 101, 25);
+  color: #D86519;
   display: inline-block;
   font-size: 18pt;
   font-weight: 400px;
@@ -212,7 +212,7 @@ nav h1 a {
 
 /* ====================== Restaurant Details ====================== */
 #restaurant-name {
-  color: rgb(216, 101, 25);
+  color: #D86519;
   font-family: Arial,sans-serif;
   font-size: 18pt;
   font-weight: 100;
@@ -253,7 +253,7 @@ nav h1 a {
   padding: 0 10px;
 }
 #reviews-container h2 {
-  color:  rgb(216, 101, 25);;
+  color:  #D86519;
   font-size: 18pt;
   font-weight: 400;
   letter-spacing: 2px;
