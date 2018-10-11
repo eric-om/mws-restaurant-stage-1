@@ -9,7 +9,7 @@ class APIHelper {
    */
   static get API_URL() {
     const port = 1337 // Change this to your server port
-    return `http://localhost:${port}/restaurants`;
+    return `http://localhost:${port}`;
   }
 
   /**
@@ -17,7 +17,7 @@ class APIHelper {
    */
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', APIHelper.API_URL);
+    xhr.open('GET', APIHelper.API_URL + '/restaurants');
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
         const restaurants = JSON.parse(xhr.responseText);
