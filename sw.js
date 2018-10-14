@@ -4,7 +4,7 @@ const filesToCache = [
   '/index.html',
   '/restaurant.html',
   '/css/styles.css',
-  '/js/dbhelper.js',
+  '/js/api_helper.js',
   '/js/main.js',
   '/js/restaurant_info.js',
   '/js/dbhelper.js',
