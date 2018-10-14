@@ -10,6 +10,7 @@
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <!-- Main CSS file -->
   <link rel="stylesheet" href="css/styles.css" type="text/css">
+  <link rel="import" href="favorite-star.html">
   <title>Restaurant Info</title>
 </head>
 
@@ -33,7 +34,10 @@
   <main id="maincontent">
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
-      <h2 id="restaurant-name"></h2>
+      <div id="restaurant-name-container" class="restaurant-name-container">
+        <favorite-star></favorite-star>
+        <h2 id="restaurant-name"></h2>
+      </div>
       <img id="restaurant-img"></img>
       <p id="restaurant-cuisine"></p>
       <p id="restaurant-address"></p>

@@ -154,11 +154,19 @@ createRestaurantHTML = (restaurant) => {
   image.alt = 'Image of ' + restaurant.name; 
   li.append(image);
 
+  restaurantNameContainer = document.createElement('div');
+  restaurantNameContainer.className = 'restaurant-name-container';
+  li.append(restaurantNameContainer);
+
+  const favorite = document.createElement('favorite-star');
+  restaurantNameContainer.appendChild(favorite);
+
   const more = document.createElement('a');
   more.innerHTML = restaurantName;
   more.href = APIHelper.urlForRestaurant(restaurant);
   more.setAttribute('aria-label', 'View details about ' + restaurant.name)
-  li.append(more);
+  restaurantNameContainer.appendChild(more);
+
 
   const neighborhood = document.createElement('p');
   neighborhood.innerHTML = restaurant.neighborhood;

@@ -34,7 +34,7 @@ a img{
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0 0 5px;
+  margin: 0 0 0;
 }
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 	display: block;
@@ -203,24 +203,31 @@ nav h1 a {
   font-size: 18pt;
   font-weight: 400px;
   letter-spacing: 2;
-  margin: 5px 0 0;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  margin-left: 5px;
+  margin-left: 10px;
+}
+.restaurant-name-container {
+  display: flex;
+  align-items: center;
 }
 
 /* ====================== Restaurant Details ====================== */
+#restaurant-name-container {
+  margin: 60px 0 5px 0px;
+}
+
 #restaurant-name {
   color: #D86519;
   font-family: Arial,sans-serif;
   font-size: 18pt;
-  font-weight: 100;
-  letter-spacing: 2px;
+  font-weight: 400;
+  letter-spacing: 2;
   display: inline-block;
-  margin: 60px 0 5px 10px;
   text-transform: uppercase;
   line-height: 1.1;
+  margin-left: 10px;
 }
 
 #restaurant-img {
