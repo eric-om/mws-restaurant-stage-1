@@ -1,7 +1,7 @@
 /**
  * Common database helper functions.
  */
-class APIHelper {
+class DBHelper {
 
   /**
    * Database URL.
@@ -17,7 +17,7 @@ class APIHelper {
    */
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', APIHelper.API_URL + '/restaurants');
+    xhr.open('GET', DBHelper.API_URL + '/restaurants');
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
         const restaurants = JSON.parse(xhr.responseText);
@@ -34,7 +34,7 @@ class APIHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    fetch(`${APIHelper.API_URL}/restaurants/${id}`).then(response => {
+    fetch(`${DBHelper.API_URL}/restaurants/${id}`).then(response => {
       if (!response.ok) return Promise.reject("Restaurant couldn't be fetched from network");
       return response.json();
     }).then(fetchedRestaurant => {
@@ -51,7 +51,7 @@ class APIHelper {
    */
   static fetchRestaurantByCuisine(cuisine, callback) {
     // Fetch all restaurants  with proper error handling
-    APIHelper.fetchRestaurants((error, restaurants) => {
+    DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
       } else {
@@ -67,7 +67,7 @@ class APIHelper {
    */
   static fetchRestaurantByNeighborhood(neighborhood, callback) {
     // Fetch all restaurants
-    APIHelper.fetchRestaurants((error, restaurants) => {
+    DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
       } else {
@@ -83,7 +83,7 @@ class APIHelper {
    */
   static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
     // Fetch all restaurants
-    APIHelper.fetchRestaurants((error, restaurants) => {
+    DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
       } else {
@@ -104,7 +104,7 @@ class APIHelper {
    */
   static fetchNeighborhoods(callback) {
     // Fetch all restaurants
-    APIHelper.fetchRestaurants((error, restaurants) => {
+    DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
       } else {
@@ -122,7 +122,7 @@ class APIHelper {
    */
   static fetchCuisines(callback) {
     // Fetch all restaurants
-    APIHelper.fetchRestaurants((error, restaurants) => {
+    DBHelper.fetchRestaurants((error, restaurants) => {
       if (error) {
         callback(error, null);
       } else {
@@ -156,7 +156,7 @@ class APIHelper {
     const marker = new google.maps.Marker({
       position: restaurant.latlng,
       title: restaurant.name,
-      url: APIHelper.urlForRestaurant(restaurant),
+      url: DBHelper.urlForRestaurant(restaurant),
       map: map,
       animation: google.maps.Animation.DROP}
     );
