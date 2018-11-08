@@ -34,18 +34,15 @@ class APIHelper {
    * Fetch a restaurant by its ID.
    */
   static fetchRestaurantById(id, callback) {
-    // fetch all restaurants with proper error handling.
-    APIHelper.fetchRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        const restaurant = restaurants.find(r => r.id == id);
-        if (restaurant) { // Got the restaurant
-          callback(null, restaurant);
-        } else { // Restaurant does not exist in the database
-          callback('Restaurant does not exist', null);
-        }
-      }
+    fetch(`${APIHelper.API_URL}/restaurants/${id}`).then(response => {
+      if (!response.ok) return Promise.reject("Restaurant couldn't be fetched from network");
+      return response.json();
+    }).then(fetchedRestaurant => {
+      // if restaurant could be fetched from network:
+      return callback(null, fetchedRestaurant);
+    }).catch(networkError => {
+      // if restaurant couldn't be fetched from network:
+      return callback(networkError, null);
     });
   }
 
