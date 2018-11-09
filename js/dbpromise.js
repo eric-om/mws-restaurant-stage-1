@@ -10,15 +10,17 @@ const dbPromise = {
   }),
 
   /**
-   * Save a restaurant or array of restaurants into idb, using promises.
+   * Save a restaurant or array of restaurants into idb, using promises. If second argument
+   * is passed a boolean true, data will be forcibly updated.
    */
-  putRestaurants(restaurants) {
+  putRestaurants(restaurants, forceUpdate = false) {
     if (!restaurants.push) restaurants = [restaurants];
     return this.db.then(db => {
       const store = db.transaction('restaurants', 'readwrite').objectStore('restaurants');
       Promise.all(restaurants.map(networkRestaurant => {
         return store.get(networkRestaurant.id).then(idbRestaurant => {
-          if (!idbRestaurant || networkRestaurant.updatedAt > idbRestaurant.updatedAt) {
+          if (forceUpdate) return store.put(networkRestaurant);
+          if (!idbRestaurant || new Date(networkRestaurant.updatedAt) > new Date(idbRestaurant.updatedAt)) {
             return store.put(networkRestaurant);
           }
         });
@@ -49,7 +51,7 @@ const dbPromise = {
       const store = db.transaction('reviews', 'readwrite').objectStore('reviews');
       Promise.all(reviews.map(networkReview => {
         return store.get(networkReview.id).then(idbReview => {
-          if (!idbReview || networkReview.updatedAt > idbReview.updatedAt) {
+          if (!idbReview || new Date(networkReview.updatedAt) > new Date(idbReview.updatedAt)) {
             return store.put(networkReview);
           }
         });
