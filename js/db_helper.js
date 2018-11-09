@@ -184,13 +184,18 @@ class DBHelper {
       return response.json();
     }).then(fetchedReviews => {
       // if reviews could be fetched from network:
-      // TODO: store reviews on idb
+      // store reviews on idb
+      dbPromise.putReviews(fetchedReviews);
       return fetchedReviews;
     }).catch(networkError => {
       // if reviews couldn't be fetched from network:
-      // TODO: try to get reviews from idb
-      console.log(`${networkError}`);
-      return null; // return null to handle error, as though there are no reviews.
+      // try to get reviews from idb
+      console.log(`${networkError}, trying idb.`);
+      return dbPromise.getReviewsForRestaurant(restaurant_id).then(idbReviews => {
+        // if no reviews were found on idb return null
+        if (idbReviews.length < 1) return null;
+        return idbReviews;
+      });
     });
   }
 
