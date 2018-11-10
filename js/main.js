@@ -159,6 +159,12 @@ createRestaurantHTML = (restaurant) => {
   li.append(restaurantNameContainer);
 
   const favorite = document.createElement('favorite-star');
+  favorite.setAttribute('aria-label', `Mark ${restaurant.name} as a favorite`);
+  favorite.setAttribute('aria-pressed', restaurant.is_favorite);
+  if (restaurant.is_favorite === 'true') {
+    favorite.setAttribute('active', '');
+  };
+  favorite.dataset.id = restaurant.id;
   restaurantNameContainer.appendChild(favorite);
 
   const more = document.createElement('a');

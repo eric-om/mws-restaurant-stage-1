@@ -24,7 +24,7 @@ Favorite Button/Star
           -webkit-transform: scale3d(1.0, 1.0, 1.0);
         }
         50% {
-          -webkit-transform: scale3d(1.8, 1.8, 1.0);
+          -webkit-transform: scale3d(2.0, 2.0, 1.0);
         }
         to {
           -webkit-transform: scale3d(1.0, 1.0, 1.0);
@@ -35,7 +35,7 @@ Favorite Button/Star
           -moz-transform: scale3d(1.0, 1.0, 1.0);
         }
         50% {
-          -moz-transform: scale3d(1.8, 1.8, 1.0);
+          -moz-transform: scale3d(2.0, 2.0, 1.0);
         }
         to {
           -moz-transform: scale3d(1.0, 1.0, 1.0);
@@ -46,7 +46,7 @@ Favorite Button/Star
           transform: scale3d(1.0, 1.0, 1.0);
         }
         50% {
-          transform: scale3d(1.8, 1.8, 1.0);
+          transform: scale3d(2.0, 2.0, 1.0);
         }
         100% {
           transform: scale3d(1.0, 1.0, 1.0);
@@ -78,9 +78,7 @@ Favorite Button/Star
         this.boundOnClick = this.onClick.bind(this);
         this.boundOnMouseover = this.onMouseover.bind(this);
         this.boundOnMouseout = this.onMouseout.bind(this);
-        if (this.hasAttribute('active')) {
-          this.element.setAttribute('active', '');
-        }
+        this.element.setAttribute('role', 'button');
       };
       proto.toggle = function() {
         if (this.hasAttribute('active')) {
@@ -90,8 +88,27 @@ Favorite Button/Star
           this.setAttribute('active', '');
         }
       }
+      proto.updateDB = function() {
+        const restaurantId = this.dataset.id;
+        const fav = this.getAttribute('aria-pressed') == 'true';
+        const url = `${DBHelper.API_URL}/restaurants/${restaurantId}/?is_favorite=${!fav}`;
+        const PUT = {method: 'PUT'};
+
+        // TODO: use Background Sync to sync data with API server
+        return fetch(url, PUT).then(response => {
+          if (!response.ok) return Promise.reject("We couldn't mark restaurant as favorite.");
+          return response.json();
+        }).then(updatedRestaurant => {
+          // update restaurant on idb
+          dbPromise.putRestaurants(updatedRestaurant, true);
+          // change state of toggle button
+          this.setAttribute('aria-pressed', !fav);
+        });
+      }
+
       proto.onClick = function() {
         this.toggle();
+        this.updateDB();
       }
       proto.onMouseover = function() {
         var el = this.element;
