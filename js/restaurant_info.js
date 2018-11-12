@@ -51,6 +51,16 @@ fetchRestaurantFromURL = (callback) => {
 fillRestaurantHTML = (restaurant = self.restaurant) => {
   const name = document.getElementById('restaurant-name');
   name.innerHTML = restaurant.name;
+  
+  const favoriteContainer = document.getElementById('favorite-container');
+  const favorite = document.createElement('favorite-star');
+  favorite.setAttribute('aria-label', `Mark ${restaurant.name} as a favorite`);
+  favorite.setAttribute('aria-pressed', restaurant.is_favorite);
+  if (restaurant.is_favorite === 'true') {
+    favorite.setAttribute('active', '');
+  };
+  favorite.dataset.id = restaurant.id;
+  favoriteContainer.appendChild(favorite);
 
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
