@@ -1,4 +1,4 @@
-// sourced from https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker
+// referenced https://developers.google.com/web/ilt/pwa/lab-caching-files-with-service-worker
 
 const filesToCache = [
   '/index.html',
@@ -34,15 +34,19 @@ self.addEventListener('install', event => {
   );
 });
 
-self.addEventListener('fetch', function(event) {
-  event.respondWith(
-    caches.open(staticCacheName).then(function(cache) {
-      return cache.match(event.request).then(function (response) {
-        return response || fetch(event.request).then(function(response) {
-          cache.put(event.request, response.clone());
+self.addEventListener('fetch', function (event) {
+  if (event.request.method === 'GET') {
+    event.respondWith(
+      caches.match(event.request).then(function (cache_response) {
+        return cache_response || fetch(event.request).then(function (response) {
+          if(response.status === 200) {
+            caches.open(staticCacheName).then(function (cache) {
+              cache.put(event.request, response.clone());
+            });
+          }
           return response;
         });
-      });
-    })
-  );
+      })
+    );
+  }
 });
