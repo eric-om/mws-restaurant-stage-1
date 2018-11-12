@@ -1,3 +1,5 @@
+https://alexandroperez.github.io/mws-walkthrough/
+
 class ReviewForm {
 /**
  * Returns a li element with review data so it can be appended to 
@@ -84,20 +86,17 @@ static handleSubmit(e) {
   const review = ReviewForm.validateAndGetData();
   if (!review) return;
 
-  console.log(review);
+  review['id'] = Math.floor(Math.random() * 99999999);
 
   const url = `${DBHelper.API_URL}/reviews/`;
   const POST = {
     method: 'POST',
     body: JSON.stringify(review)
   };
-
-  // TODO: use Background Sync to sync data with API server
-  return fetch(url, POST).then(response => {
-    if (!response.ok) return Promise.reject("We couldn't post review to server.");
-    return response.json();
-  }).then(newNetworkReview => {
+  
+  ((newNetworkReview => {
     // save new review on idb
+    console.log("Updating idb");
     dbPromise.putReviews(newNetworkReview);
     // post new review on page
     const reviewList = document.getElementById('reviews-list');
@@ -105,8 +104,25 @@ static handleSubmit(e) {
     reviewList.appendChild(review);
     // clear form
     ReviewForm.clearForm();
-  });
+  }))(review);
 
+  console.log("hello");
+  navigator.serviceWorker.register('/sw.js');
+  if (!window.SyncManager || !navigator.serviceWorker) {
+    console.log('Sync not supported.');
+    return fetch(url, POST);
+  } else {
+    console.log('Sync supported');
+    return navigator.serviceWorker.ready.then(function (reg) {
+      console.log("Registering for sync.");
+      return reg.sync.register('syncReviews');
+    }).catch(function() {
+      console.log("Registering for sync failed.")
+      // system was unable to register for a sync,
+      // this could be an OS-level restriction
+      return fetch(url, POST);
+    });
+  }
 }
 
 /**
