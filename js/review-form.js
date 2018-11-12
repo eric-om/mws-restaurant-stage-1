@@ -1,4 +1,4 @@
-https://alexandroperez.github.io/mws-walkthrough/
+// reference: https://alexandroperez.github.io/mws-walkthrough/
 
 class ReviewForm {
 /**
@@ -106,8 +106,6 @@ static handleSubmit(e) {
     ReviewForm.clearForm();
   }))(review);
 
-  console.log("hello");
-  navigator.serviceWorker.register('/sw.js');
   if (!window.SyncManager || !navigator.serviceWorker) {
     console.log('Sync not supported.');
     return fetch(url, POST);
