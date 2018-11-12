@@ -1,3 +1,5 @@
+// reference: https://alexandroperez.github.io/mws-walkthrough/
+
 let restaurant;
 var map;
 

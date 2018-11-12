@@ -1,3 +1,5 @@
+// reference: https://alexandroperez.github.io/mws-walkthrough/
+
 const dbPromise = {
   db: idb.open('restaurant-reviews-db', 2, function(upgradeDb) {
     switch (upgradeDb.oldVersion) {
